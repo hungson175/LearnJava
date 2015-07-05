@@ -1,0 +1,62 @@
+Report Jedis
+-----------------------------------------
+Scan Count = 1000, dont get values
+Rows: 10007 === time: 535
+Rows: 20008 === time: 1045
+Rows: 30012 === time: 1559
+Rows: 40014 === time: 2089
+Rows: 50021 === time: 2610
+-----------------------------------------
+Scan count = 10, dont get values
+Rows: 10005 === time: 2470
+Rows: 20003 === time: 4931
+-----------------------------------------
+Scan count = 10000, dont get values
+Rows: 10000 === time: 173
+Rows: 20000 === time: 293
+Rows: 30000 === time: 757
+-----------------------------------------
+Scan count = 1000000, dont get values
+Rows: 1000000 === time: 9981
+Rows: 2000001 === time: 19196
+
+-----------------------------------------
+Count = 1Mil, no values, using hll: 
+Sumary: 
+Rows: 33117172 ErrorCnt: 0 === time: 367490
+Exact: 33117172 ### Estimated: 33399621 ### Procent: 0.99154334715355
+
+Rows: 1000000 === time: 9576 === cursor: 66919904
+Rows: 2000000 === time: 19249 === cursor: 12078832
+Rows: 3000000 === time: 28550 === cursor: 58914024
+Rows: 4000000 === time: 38371 === cursor: 50427768
+Rows: 5000001 === time: 48312 === cursor: 1578340
+Rows: 6000001 === time: 57588 === cursor: 33293940
+Rows: 7000001 === time: 67098 === cursor: 1718380
+Rows: 8000001 === time: 76407 === cursor: 43543484
+Rows: 9000002 === time: 86568 === cursor: 35948962
+Rows: 10000002 === time: 95763 === cursor: 2003634
+Rows: 11000003 === time: 105055 === cursor: 47382698
+Rows: 12000004 === time: 115015 === cursor: 59260218
+Rows: 13000004 === time: 130602 === cursor: 45477414
+Rows: 14000004 === time: 140068 === cursor: 8385590
+Rows: 15000004 === time: 149430 === cursor: 36255694
+Rows: 16000004 === time: 158811 === cursor: 13526494
+Rows: 17000004 === time: 168310 === cursor: 63964865
+Rows: 18000004 === time: 178490 === cursor: 10148049
+Rows: 19000004 === time: 187935 === cursor: 35826505
+Rows: 20000004 === time: 197299 === cursor: 13764953
+Rows: 21000004 === time: 206647 === cursor: 26137157
+Rows: 22000004 === time: 216002 === cursor: 26140757
+Rows: 23000007 === time: 235755 === cursor: 30114701
+Rows: 24000008 === time: 245057 === cursor: 43433629
+Rows: 25000009 === time: 254668 === cursor: 11656323
+Rows: 26000009 === time: 264834 === cursor: 35561235
+Rows: 27000009 === time: 274739 === cursor: 48868619
+Rows: 28000009 === time: 284089 === cursor: 45649435
+Rows: 29000010 === time: 294124 === cursor: 61649927
+Rows: 30000010 === time: 303309 === cursor: 18409447
+Rows: 31000010 === time: 324203 === cursor: 56788471
+Rows: 32000011 === time: 333623 === cursor: 35814127
+Rows: 33000011 === time: 366359 === cursor: 25499903
+---------------------------------------
