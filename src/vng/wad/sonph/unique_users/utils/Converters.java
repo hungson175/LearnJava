@@ -67,4 +67,14 @@ public class Converters {
 		}
 	}
 
+	public static String toHumanReadableTime(long currentTimeMillis) {
+		java.util.Date date = new java.util.Date(currentTimeMillis);
+		DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		return df.format(date);
+	}
+
+	public static String toDateString(Date date) {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		return df.format(date);
+	}
 }
