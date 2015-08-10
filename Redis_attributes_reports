@@ -1,0 +1,212 @@
+Redis gender reports:
+
+Report 1:
+Total Count: 1000047
+Gender: Count(0) = 217433, percentage = 21.7 
+Gender: Count(1) = 409455, percentage = 40.9 
+Gender: Count(2) = 373158, percentage = 37.3 
+Gender: Count(3) = 1, percentage = 0.0 
+Check sum count = 1000047
+WITH_PIPELINE: #items: 1000000 , #scan batch size: 10000, #time:25165
+================== BEGIN: REPORT 5 =====================
+Count: 1000041
+Gender: Count(0) = 211361, percentage = 21.1 
+Gender: Count(1) = 413726, percentage = 41.4 
+Gender: Count(2) = 374953, percentage = 37.5 
+Gender: Count(3) = 1, percentage = 0.0 
+Check sum = 1000041
+------ Ages -----
+Ages: CountRange[0,17] = 96404, percentage = 16.4
+Ages: CountRange[18,24] = 205090, percentage = 34.8
+Ages: CountRange[25,34] = 178628, percentage = 30.3
+Ages: CountRange[35,44] = 88598, percentage = 15.0
+Ages: CountRange[45,54] = 14464, percentage = 2.5
+Ages: CountRange[55,64] = 3498, percentage = 0.6
+Ages: CountRange[65,998] = 2851, percentage = 0.5
+Check sum ages= 589540
+------ Ages MDQ-----
+Ages: CountRange[0,17] = 45282, percentage = 12.1
+Ages: CountRange[18,24] = 66542, percentage = 17.8
+Ages: CountRange[25,34] = 102365, percentage = 27.4
+Ages: CountRange[35,44] = 55101, percentage = 14.7
+Ages: CountRange[45,54] = 44108, percentage = 11.8
+Ages: CountRange[55,64] = 43731, percentage = 11.7
+Ages: CountRange[65,998] = 16614, percentage = 4.4
+Check sum ages MDQ= 373743
+Item with more than one age range: 0
+WITH_PIPELINE: #items: 1000000 , #scan batch size: 10000, #time:24857 
+================== BEGIN: REPORT 5 =====================
+================== BEGIN: REPORT 3 =====================
+Count: 100006
+Gender: Count(0) = 21749, percentage = 21.7 
+Gender: Count(1) = 40893, percentage = 40.9 
+Gender: Count(2) = 37363, percentage = 37.4 
+Gender: Count(3) = 1, percentage = 0.0 
+Check sum = 100006
+------ Ages -----
+Ages: CountRange[0,17] = 9570, percentage = 16.2
+Ages: CountRange[18,24] = 20674, percentage = 35.1
+Ages: CountRange[25,34] = 17779, percentage = 30.2
+Ages: CountRange[35,44] = 8774, percentage = 14.9
+Ages: CountRange[45,54] = 1475, percentage = 2.5
+Ages: CountRange[55,64] = 366, percentage = 0.6
+Ages: CountRange[65,998] = 278, percentage = 0.5
+Check sum ages= 58917
+WITH_PIPELINE: #items: 100000 , #scan batch size: 10000, #time:2746 
+================== END  : REPORT 3 =====================
+================== BEGIN: REPORT 4 =====================
+2001.0508f37e0a3ae364ba2b.1434460212208.029cefd2
+Count: 1000034
+Gender: Count(0) = 217413, percentage = 21.7 
+Gender: Count(1) = 409460, percentage = 40.9 
+Gender: Count(2) = 373160, percentage = 37.3 
+Gender: Count(3) = 1, percentage = 0.0 
+Check sum = 1000034
+------ Ages -----
+Ages: CountRange[0,17] = 96059, percentage = 16.3
+Ages: CountRange[18,24] = 205588, percentage = 34.8
+Ages: CountRange[25,34] = 178924, percentage = 30.3
+Ages: CountRange[35,44] = 88595, percentage = 15.0
+Ages: CountRange[45,54] = 14491, percentage = 2.5
+Ages: CountRange[55,64] = 3499, percentage = 0.6
+Ages: CountRange[65,998] = 2851, percentage = 0.5
+Check sum ages= 590014
+WITH_PIPELINE: #items: 1000000 , #scan batch size: 10000, #time:30713 
+================== END  : REPORT 4 =====================
+
+================== BEGIN: REPORT 2 =====================
+ 2001.0508f37e0a3ae364ba2b.1434460212208.029cefd2
+ Something funny: 1980,1990,2000 has more than they should !
+Count: 2000093
+Gender: Count(0) = 435062, percentage = 21.8 
+Gender: Count(1) = 818788, percentage = 40.9 
+Gender: Count(2) = 746242, percentage = 37.3 
+Gender: Count(3) = 1, percentage = 0.0 
+Check sum = 2000093
+------ Ages -----
+
+Years: Count(1901) = 3, percentage = 0.0 
+Years: Count(1905) = 160, percentage = 0.0 
+Years: Count(1906) = 1, percentage = 0.0 
+Years: Count(1907) = 5, percentage = 0.0 
+Years: Count(1908) = 5, percentage = 0.0 
+Years: Count(1909) = 1, percentage = 0.0 
+Years: Count(1910) = 11, percentage = 0.0 
+Years: Count(1911) = 4, percentage = 0.0 
+Years: Count(1912) = 1, percentage = 0.0 
+Years: Count(1913) = 3, percentage = 0.0 
+Years: Count(1914) = 20, percentage = 0.0 
+Years: Count(1915) = 34, percentage = 0.0 
+Years: Count(1916) = 16, percentage = 0.0 
+Years: Count(1917) = 7, percentage = 0.0 
+Years: Count(1918) = 19, percentage = 0.0 
+Years: Count(1919) = 74, percentage = 0.0 
+Years: Count(1920) = 15, percentage = 0.0 
+Years: Count(1921) = 3, percentage = 0.0 
+Years: Count(1922) = 4, percentage = 0.0 
+Years: Count(1923) = 4, percentage = 0.0 
+Years: Count(1924) = 5, percentage = 0.0 
+Years: Count(1925) = 4, percentage = 0.0 
+Years: Count(1926) = 3, percentage = 0.0 
+Years: Count(1927) = 14, percentage = 0.0 
+Years: Count(1928) = 7, percentage = 0.0 
+Years: Count(1929) = 8, percentage = 0.0 
+Years: Count(1930) = 21, percentage = 0.0 
+Years: Count(1931) = 6, percentage = 0.0 
+Years: Count(1932) = 241, percentage = 0.0 
+Years: Count(1933) = 48, percentage = 0.0 
+Years: Count(1934) = 31, percentage = 0.0 
+Years: Count(1935) = 2669, percentage = 0.1 
+Years: Count(1936) = 87, percentage = 0.0 
+Years: Count(1937) = 81, percentage = 0.0 
+Years: Count(1938) = 75, percentage = 0.0 
+Years: Count(1939) = 127, percentage = 0.0 
+Years: Count(1940) = 128, percentage = 0.0 
+Years: Count(1941) = 51, percentage = 0.0 
+Years: Count(1942) = 44, percentage = 0.0 
+Years: Count(1943) = 43, percentage = 0.0 
+Years: Count(1944) = 101, percentage = 0.0 
+Years: Count(1945) = 494, percentage = 0.0 
+Years: Count(1946) = 86, percentage = 0.0 
+Years: Count(1947) = 116, percentage = 0.0 
+Years: Count(1948) = 150, percentage = 0.0 
+Years: Count(1949) = 173, percentage = 0.0 
+Years: Count(1950) = 492, percentage = 0.0 
+Years: Count(1951) = 233, percentage = 0.0 
+Years: Count(1952) = 319, percentage = 0.0 
+Years: Count(1953) = 285, percentage = 0.0 
+Years: Count(1954) = 478, percentage = 0.0 
+Years: Count(1955) = 637, percentage = 0.0 
+Years: Count(1956) = 611, percentage = 0.0 
+Years: Count(1957) = 839, percentage = 0.0 
+Years: Count(1958) = 930, percentage = 0.0 
+Years: Count(1959) = 996, percentage = 0.0 
+Years: Count(1960) = 1644, percentage = 0.1 
+Years: Count(1961) = 1190, percentage = 0.1 
+Years: Count(1962) = 1483, percentage = 0.1 
+Years: Count(1963) = 1748, percentage = 0.1 
+Years: Count(1964) = 2037, percentage = 0.1 
+Years: Count(1965) = 2225, percentage = 0.1 
+Years: Count(1966) = 2386, percentage = 0.1 
+Years: Count(1967) = 2563, percentage = 0.1 
+Years: Count(1968) = 3568, percentage = 0.2 
+Years: Count(1969) = 3775, percentage = 0.2 
+Years: Count(1970) = 7698, percentage = 0.4 
+Years: Count(1971) = 5059, percentage = 0.3 
+Years: Count(1972) = 6486, percentage = 0.3 
+Years: Count(1973) = 6700, percentage = 0.3 
+Years: Count(1974) = 7802, percentage = 0.4 
+Years: Count(1975) = 9628, percentage = 0.5 
+Years: Count(1976) = 11117, percentage = 0.6 
+Years: Count(1977) = 11072, percentage = 0.6 
+Years: Count(1978) = 12549, percentage = 0.6 
+Years: Count(1979) = 15277, percentage = 0.8 
+Years: Count(1980) = 91100, percentage = 4.6 
+Years: Count(1981) = 16853, percentage = 0.8 
+Years: Count(1982) = 22246, percentage = 1.1 
+Years: Count(1983) = 25748, percentage = 1.3 
+Years: Count(1984) = 27887, percentage = 1.4 
+Years: Count(1985) = 31423, percentage = 1.6 
+Years: Count(1986) = 30794, percentage = 1.5 
+Years: Count(1987) = 38996, percentage = 1.9 
+Years: Count(1988) = 45848, percentage = 2.3 
+Years: Count(1989) = 47751, percentage = 2.4 
+Years: Count(1990) = 70307, percentage = 3.5 
+Years: Count(1991) = 56613, percentage = 2.8 
+Years: Count(1992) = 60963, percentage = 3.0 
+Years: Count(1993) = 63470, percentage = 3.2 
+Years: Count(1994) = 60213, percentage = 3.0 
+Years: Count(1995) = 64094, percentage = 3.2 
+Years: Count(1996) = 56780, percentage = 2.8 
+Years: Count(1997) = 48544, percentage = 2.4 
+Years: Count(1998) = 36874, percentage = 1.8 
+Years: Count(1999) = 34030, percentage = 1.7 
+Years: Count(2000) = 58045, percentage = 2.9 
+Years: Count(2001) = 15673, percentage = 0.8 
+Years: Count(2002) = 14084, percentage = 0.7 
+Years: Count(2003) = 12388, percentage = 0.6 
+Years: Count(2004) = 8251, percentage = 0.4 
+Years: Count(2005) = 5065, percentage = 0.3 
+Years: Count(2006) = 2257, percentage = 0.1 
+Years: Count(2007) = 1322, percentage = 0.1 
+Years: Count(2008) = 1010, percentage = 0.1 
+Years: Count(2009) = 396, percentage = 0.0 
+Years: Count(2010) = 308, percentage = 0.0 
+Years: Count(2011) = 402, percentage = 0.0 
+Years: Count(2012) = 581, percentage = 0.0 
+Years: Count(2013) = 712, percentage = 0.0 
+Years: Count(2014) = 1166, percentage = 0.1 
+Years: Count(2015) = 153, percentage = 0.0 
+Years: Count(2019) = 2, percentage = 0.0 
+Years: Count(2020) = 2, percentage = 0.0 
+Years: Count(2028) = 1, percentage = 0.0 
+Years: Count(2036) = 3, percentage = 0.0 
+Years: Count(2037) = 4, percentage = 0.0 
+Check sum ages= 2000093
+WITH_PIPELINE: #items: 2000000 , #scan batch size: 10000, #time:53069 
+ 
+================== END:REPORT 2 =====================
+
+================== BEGIN: REPORT 3 =====================
+(This 
+================== END:REPORT 3 =====================

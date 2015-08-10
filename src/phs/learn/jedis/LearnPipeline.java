@@ -1,8 +1,13 @@
 package phs.learn.jedis;
 
+import java.awt.MultipleGradientPaint.CycleMethod;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.TreeMap;
+
+import org.junit.Assert;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -10,6 +15,9 @@ import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.ScanParams;
 import redis.clients.jedis.ScanResult;
+import ads.common.protobuf.AdtimaProfileProtoBuf.AdtimaProfile;
+
+import com.google.protobuf.InvalidProtocolBufferException;
 
 
 /**
@@ -44,7 +52,7 @@ import redis.clients.jedis.ScanResult;
 public class LearnPipeline {
 	private static final int TOTAL_SIZE = 1000000;
 	private static final int SCAN_BATCH_SIZE = 10000;
-
+	private static final int[] AGE_BOUNDS = {0,18,25,35,45,55,65,999};
 	public interface IToBeCountedTime {
 		void process();
 	}
@@ -52,7 +60,7 @@ public class LearnPipeline {
 //	private static final int REDIS_PORT = 6379;
 	private static final int REDIS_PORT = 6399;
 	private static final String REDIS_HOST = "10.30.58.100";
-	private static final int SO_TIMEOUT = 20000;
+	private static final int SO_TIMEOUT = 30000;
 	private static RandomString randomGenerator = new RandomString(32);
 	public static void main(String[] args) {
 		//testing approach: insert 1000000 items into redis
@@ -80,6 +88,10 @@ public class LearnPipeline {
 
 	}
 
+	static HashMap<Integer,Integer> countGender = new HashMap<Integer, Integer>();
+	static TreeMap<Integer,Integer> countYear = new TreeMap<Integer, Integer>();
+	private static int[] countAgeRangeMDQ;
+	private static int cntMDQDefects;
 	private static void getDataWithPipeline() {
 		try (
 				JedisPool pool = new JedisPool(new JedisPoolConfig(),REDIS_HOST,REDIS_PORT,SO_TIMEOUT);			
@@ -87,6 +99,7 @@ public class LearnPipeline {
 		{		
 			String cursor = "0";
 			int cnt = 0;
+			countAgeRangeMDQ = new int[AGE_BOUNDS.length-1];
 			do {
 				ScanParams params = new ScanParams().count(SCAN_BATCH_SIZE);
 				ScanResult<String> scan = jedis.scan(cursor, params);
@@ -97,12 +110,125 @@ public class LearnPipeline {
 					pipelined.get(uid.getBytes());
 					cnt++;
 				}
-				List<Object> list = pipelined.syncAndReturnAll();
-			} while (cnt < TOTAL_SIZE);
+				ArrayList<Object> list = new ArrayList<Object>();
+				list.addAll(pipelined.syncAndReturnAll());
+				Assert.assertEquals(list.size(), uids.size());
+				for(int i = 0 ; i < list.size() ; i++) {
+					Object temp = list.get(i);
+					String uid = uids.get(i);
+					if ( temp instanceof byte[]) {
+						byte[] bytes = (byte[]) temp;
+						try {
+							AdtimaProfile profile = AdtimaProfile.parseFrom(bytes);			
+							validateGenders(profile,uid);
+							validateBirthYear(profile,uid);
+							validateAgeRangeByMDG(profile);
+						} catch (InvalidProtocolBufferException e) {
+							//just skip
+						}
+					}						
+				}
+			} while (cnt < TOTAL_SIZE && !cursor.equals("0"));			
 			System.out.println("Count: " + cnt);
+			int sum = 0;
+			for(Integer key : countGender.keySet()) {
+				System.out.printf("Gender: Count(%d) = %d, percentage = %.1f \n",key,countGender.get(key),((1.0 * countGender.get(key))/ cnt)*100);
+				sum += countGender.get(key);
+			}
+			System.out.println("Check sum = " + sum);
+			System.out.println("------ Ages -----");
+			int sumAges = 0;
+			int[] countRange = new int[AGE_BOUNDS.length-1];
+			for(Integer ages : countYear.keySet()) {
+//				System.out.printf("Years: Count(%d) = %d, percentage = %.1f \n",ages,countYear.get(ages),((1.0 * countYear.get(ages))/ cnt)*100);
+				sumAges += countYear.get(ages);
+				int rangeIndex = findIndex(ages);
+				if ( rangeIndex >= 0 ) {					
+					countRange[rangeIndex] += countYear.get(ages);
+				}
+			}
+			for(int i = 0 ; i < AGE_BOUNDS.length - 1 ; i++) {
+				System.out.printf("Ages: CountRange[%d,%d] = %d, percentage = %.1f\n",AGE_BOUNDS[i],AGE_BOUNDS[i+1]-1,countRange[i],(100.0*countRange[i])/sumAges);
+			}
+			System.out.println("Check sum ages= " + sumAges);
+			System.out.println("------ Ages MDQ-----");
+			int sumAgeMDQ = 0;
+			for(int i = 0 ; i < AGE_BOUNDS.length - 1 ; i++) sumAgeMDQ += countAgeRangeMDQ[i];
+			for(int i = 0 ; i < AGE_BOUNDS.length - 1 ; i++) {
+				System.out.printf("Ages: CountRange[%d,%d] = %d, percentage = %.1f\n",AGE_BOUNDS[i],AGE_BOUNDS[i+1]-1,countAgeRangeMDQ[i],(100.0*countAgeRangeMDQ[i])/sumAgeMDQ);
+			}
+			System.out.println("Check sum ages MDQ= " + sumAgeMDQ);
+			System.out.println("Item with more than one age range: " + cntMDQDefects);
 		}
 	}
 	
+	private static int findIndex(int ages) {
+		int index = -1;
+		for(int i = AGE_BOUNDS.length -1 ; i >=0 ; i--) 
+			if ( ages >= AGE_BOUNDS[i]) return i;
+		return index;		
+	}
+
+	private static void validateBirthYear(AdtimaProfile profile, String uid) {
+		long dob = 1L * profile.getDob() * 1000;
+		int currentYear = new java.util.Date(System.currentTimeMillis()).getYear() + 1900;
+		if ( dob !=0  ) {
+			java.util.Date date = new java.util.Date(dob);
+			@SuppressWarnings("deprecation")
+			int y = date.getYear() + 1900;
+			int age = currentYear - y;
+			Integer c = countYear.get(age);
+			int next = 1;
+			if ( c != null ) next = c.intValue() + 1;
+			countYear.put(age, next);
+		}
+	}
+	
+	
+//	val AGE_TEEN = createBit(4)
+//	val AGE_18_TO_24 = createBit(5)
+//	val AGE_25_TO_34 = createBit(6)
+//	val AGE_35_TO_44 = createBit(7)
+//	val AGE_45_TO_54 = createBit(8)
+//	val AGE_55_TO_64 = createBit(9)
+//	val AGE_ABOVE_65 = createBit(10)
+	private static void validateAgeRangeByMDG(AdtimaProfile profile) {
+		int index = -1;
+		int cnt = 0;
+		long mask = profile.getMqinfo();
+		for(int i = 4 ; i <= 10 ; i++) {
+			if ( ((mask >> (64-i)) &  1L) != 0) {
+				index = i;
+				cnt++;
+			}
+		}
+		if ( cnt > 1) {
+			cntMDQDefects++;
+		} else {
+			Assert.assertTrue(cnt <= 1);
+			Assert.assertTrue(index == -1 || (index >= 4 && index <= 10));
+			if ( index != -1)
+				countAgeRangeMDQ[index-4]++;
+		}
+	}
+
+	//val MALE = createBit(1)
+	//val FEMALE = createBit(2)
+	private static void validateGenders(AdtimaProfile profile, String uid) {
+		int gender = profile.getGender();
+		increaseCount(gender);
+		if ( gender == 3) {
+			System.out.println(uid);
+		}
+	}
+
+	private static void increaseCount(int gender) {		
+		Integer value = countGender.get(gender);
+		int next = 1;
+		if ( value != null ) next = value.intValue() + 1;	
+		countGender.put(gender,next);
+	}
+
 	private static void getDataWithoutPipeline() {
 		long startTime = System.currentTimeMillis();
 		try (
@@ -180,7 +306,7 @@ public class LearnPipeline {
 	}
 	
 	private static void generateItemsNoPipeline(int n) {
-		try (
+		try (			// TODO Auto-generated constructor stub
 				JedisPool pool = new JedisPool(new JedisPoolConfig(),REDIS_HOST,REDIS_PORT,SO_TIMEOUT);			
 				Jedis jedis = pool.getResource();)
 		{
@@ -213,6 +339,7 @@ public class LearnPipeline {
 	private static String generateKey(int length) {
 		return randomGenerator.nextString();
 	}
+
 
 }
 
