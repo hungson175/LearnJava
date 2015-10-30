@@ -3,6 +3,9 @@ package vng.wad.sonph.unique_users.utils;
 import java.sql.Date;
 import java.util.concurrent.TimeUnit;
 
+import phs.learn.meter_intersection.ISetEstimator;
+import vng.wad.rd.unique.users.hll.CardinalityMergeException;
+
 
 public class Helpers {
 
@@ -48,6 +51,15 @@ public class Helpers {
 	private static final long MEGABYTE = 1024L * 1024L;
 	public static long bytesToMegabytes(long bytes) {
 		return bytes / MEGABYTE;
+	}
+	static public int countIntersection(ISetEstimator[] sets) throws CardinalityMergeException {
+		if ( sets.length == 0 ) return 0;
+		if ( sets.length == 1) return sets[0].cardinality();
+		ISetEstimator[] rest = new ISetEstimator[sets.length-1];
+		for(int i=  0 ; i < sets.length - 1 ; i++) {
+			rest[ i ] = sets[i+1];
+		}
+		return sets[0].countIntersection(rest);
 	}
 
 }

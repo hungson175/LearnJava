@@ -7,9 +7,10 @@ public class Fibonacci {
 	private static int cnt;
 	private static long[] f = new long[N+1];
 	public static void main(String[] args) {
-		cnt = 0 ;
-		Arrays.fill(f, -1);
-		System.out.println(""+fibo(N)+"###"+cnt);
+//		cnt = 0 ;
+//		Arrays.fill(f, -1);
+//		System.out.println(""+fibo(N)+"###"+cnt);
+		System.out.println(System.currentTimeMillis());
 	}
 	private static long fibo(int n) {
 		cnt++;
